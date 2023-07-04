@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './PropertyForm.css'; // Import the CSS file
-import db from '../firebase/firebase';
+import './Form.css'; // Import the CSS file
+import db from '../firebase/Firebase';
 
 const PropertyForm = ({ onSubmit, onCancel }) => {
   const [realEstateName, setRealEstateName] = useState('');

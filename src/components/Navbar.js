@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import Web3Modal from "web3modal";
 import { ethers } from 'ethers';
-import {CoinbaseWalletSDK} from "@coinbase/wallet-sdk"
+import {CoinbaseWalletSDK} from "@coinbase/wallet-sdk";
+import { LoginButton } from './LoginButton';
 
 const providerOptions = {
     coinbasewallet: {
@@ -104,6 +105,7 @@ function Navbar() {
             </li>
           </ul>
           {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
+          {button && <LoginButton buttonStyle='btn--outline'>Login</LoginButton>}
         </div>
       </nav>
     </>

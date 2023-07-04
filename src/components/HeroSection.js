@@ -2,29 +2,22 @@ import React from 'react';
 import '../App.css';
 import { Button } from './Button';
 import './HeroSection.css';
+import { PropertyButton } from './PropertyButton';
 
 function HeroSection() {
   return (
     <div className='hero-container'>
-      <video src='/videos/video-1.mp4' autoPlay loop muted />
       <h1>Tokenized Properties</h1>
       <p>List your property now!</p>
       <div className='hero-btns'>
-        <Button
+        {/* change button */}
+        <PropertyButton
           className='btns'
           buttonStyle='btn--outline'
           buttonSize='btn--large'
         >
           List your property
-        </Button>
-        <Button
-          className='btns'
-          buttonStyle='btn--primary'
-          buttonSize='btn--large'
-          onClick={console.log('hey')}
-        >
-          WATCH TRAILER <i className='far fa-play-circle' />
-        </Button>
+        </PropertyButton>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import '../App.css';
 import { Button } from './Button';
 import './HeroSection.css';
 import { PropertyButton } from './PropertyButton';
+import { SearchBar } from './searchbar/SearchBar';
 
 function HeroSection() {
   return (
@@ -10,7 +11,6 @@ function HeroSection() {
       <h1>Tokenized Properties</h1>
       <p>List your property now!</p>
       <div className='hero-btns'>
-        {/* change button */}
         <PropertyButton
           className='btns'
           buttonStyle='btn--outline'
@@ -18,7 +18,9 @@ function HeroSection() {
         >
           List your property
         </PropertyButton>
+        <SearchBar>Search for Properties</SearchBar>
       </div>
+      
     </div>
   );
 }

@@ -1,23 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
-contract ListingProducer {
-    address[] public ListingAddresses;
-
-    event ListProperty(address indexed listingAddress);
-
-    function listCampaign(string calldata name, uint256 targetAmount) public {
-        PropertyListing c = new PropertyListing(name, targetAmount, msg.sender);
-        ListingAddresses.push(address(c));
-        emit ListProperty(address(c));
-    }
-
-    function getListingAddresses() public view returns (address[] memory) {
-        return ListingAddresses;
-    }
-
-}
-
 contract PropertyListing {
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);

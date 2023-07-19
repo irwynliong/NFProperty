@@ -14,7 +14,7 @@
     "ethers": "^6.6.2",
     "firebase": "^9.23.0",
     "fs-extra": "^11.1.1",
-    "ganache-cli": "^6.12.2",
+    "ganache": "^7.9.0",
     "mocha": "^8.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -32,8 +32,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test": "mocha ./src/components/ethereum/test.js"
   },
   "eslintConfig": {
     "extends": [

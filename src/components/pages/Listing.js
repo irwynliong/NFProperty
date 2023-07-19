@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../App.css';
+import Cards from '../Cards';
 
 export default function Listing() {
-  return <h1 className='listing'>Listing</h1>;
+   return <Cards />
 }

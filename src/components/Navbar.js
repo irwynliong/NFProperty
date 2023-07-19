@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import Web3Modal from "web3modal";
-import { ethers } from 'ethers';
-import {CoinbaseWalletSDK} from "@coinbase/wallet-sdk";
-import { LoginButton } from './LoginButton';
 import ConnectWallet from "./ConnectWallet";
 
 
@@ -78,8 +73,6 @@ function Navbar() {
               </Link>
             </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
-          {button && <LoginButton buttonStyle='btn--outline'>Login</LoginButton>}
         </div>
       </nav>
     </>

@@ -1,15 +1,12 @@
-import React, { cloneElement, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Form.css'; // Import the CSS file
-import db from '../firebase/Firebase';
-import { doc, setDoc, collection } from "firebase/firestore"; 
-import { AccountContext } from "../account/context/AccountContext";
-//import { Property } from "../contracts/Property"
-import web3 from '../../web3';
-import { WalletSDKRelayAbstract } from '@coinbase/wallet-sdk/dist/relay/WalletSDKRelayAbstract';
-
+import { db, storage } from '../firebase/Firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { doc, setDoc, collection } from 'firebase/firestore'; 
+import { AccountContext } from '../account/context/AccountContext';
 
 const PropertyForm = ({ onSubmit, onCancel }) => {
-  
+  const [imageUrl, setImageUrl] = useState(null);
   const [realEstateName, setRealEstateName] = useState('');
   const [targetAmount, setTargetAmount] = useState(0);
   const [totalTokens, setTotalTokens] = useState(0);
@@ -17,53 +14,55 @@ const PropertyForm = ({ onSubmit, onCancel }) => {
   const [imageFile, setImageFile] = useState(null);
   const [account, setAccount] = React.useContext(AccountContext);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImageFile(file);
-  };
-
   const propertiesRef = collection(db, "properties");
 
   //when form is submitted
   const handleSubmit = (e) => {
-    console.log(account);
     e.preventDefault();
-    /*if (!account) {
-      //popup("Please connect wallet first");
-      return;
-    }*/
-    // New FireBase 
-    //console.log(account);
     
-    setDoc(doc(propertiesRef), {
-      realEstateName: realEstateName,
-        targetAmount: targetAmount,
-        totalTokens: totalTokens,
-        delistDate: delistDate,
-        managerAddress: account
-    })
-    .then( () => {
-      if (imageFile) {
-        // Upload the image file to storage
-        const storageRef = db.storage().ref();
-        const imageRef = storageRef.child(`images/${account}`);
-        imageRef.put(imageFile).then(() => {
-          console.log('Image uploaded successfully');
-          onSubmit(); // Call the parent component's onSubmit function
-        });
-      } else {
-        //onSubmit();
-      }
-    })
-    .catch((error) => {
-      console.error('Error adding property:', error);
-    });
+    if (imageFile) {
+      // Upload the image file to storage
+      const storageRef = ref(storage, `images/${account}`);
+      const uploadTask = uploadBytesResumable(storageRef, imageFile);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          // Handle progress updates here
+        },
+        (error) => {
+          console.error('Error uploading image:', error);
+        },
+        () => {
+          // Get the download URL of the uploaded image
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            // Save the data to Firestore
+            setDoc(doc(propertiesRef), {
+              realEstateName: realEstateName,
+              targetAmount: targetAmount,
+              totalTokens: totalTokens,
+              delistDate: delistDate,
+              managerAddress: account,
+              imageUrl: url
+            })
+            .then(() => {
+              onSubmit(); // Call the parent component's onSubmit function
+            })
+            .catch((error) => {
+              console.error('Error adding property:', error);
+            });
+          });
+        }
+      );
+    } else {
+      alert('Please select an image file first!');
+    }
   };
 
   return (
     <div>
       <h3>List a Property</h3>
-      <form onSubmit={handleSubmit}>
+      <form className='property-form'>
         <label>
           Real Estate Name:
           <input
@@ -120,7 +119,8 @@ const PropertyForm = ({ onSubmit, onCancel }) => {
             }}
           />
         </label>
-        <button type="submit">Submit</button>
+        
+        <button type="submit" onClick={handleSubmit}>Submit</button>
         <button type="button" onClick={onCancel}>
           Cancel
         </button>
@@ -130,4 +130,5 @@ const PropertyForm = ({ onSubmit, onCancel }) => {
 };
 
 export default PropertyForm;
+
 

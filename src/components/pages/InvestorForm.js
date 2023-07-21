@@ -31,7 +31,7 @@ function InvestorForm({
         throw Error("Please connect your account");
       }
       setLoading(true);
-      await invest({ campaignAddress, amount });
+      await invest({ propertyAddress, amount });
     } catch (err) {
       if (err.code === 32000 || err.code === 32603) {
         popup("Please reset your MetaMask account");
@@ -108,3 +108,5 @@ function InvestorForm({
     </div>
   );
 }
+
+export default InvestorForm;

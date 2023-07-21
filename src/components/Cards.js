@@ -13,7 +13,7 @@ function Cards() {
               src='images/property1.jpg'
               text='Some rich people house'
               label='Landed'
-              path='/listing'
+              path= '/property/:propertyId'
             />
             <CardItem
               src='images/property2.png'

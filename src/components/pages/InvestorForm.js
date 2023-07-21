@@ -108,3 +108,5 @@ function InvestorForm({
     </div>
   );
 }
+
+export default InvestorForm;

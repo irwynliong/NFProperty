@@ -1,5 +1,5 @@
 import { PropertyListing } from "./contracts";
-import web3 from "./web3";
+import web3 from "../../web3"
 import { toWei } from "./utils/utils";
 
 const getActiveAccount = async () => (await web3.eth.getAccounts())[0];

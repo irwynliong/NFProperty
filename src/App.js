@@ -8,7 +8,8 @@ import SignUp from './components/pages/SignUp';
 import LogIn from './components/pages/LogIn';
 import PropertyForm from './components/pages/Form';
 import Listing from './components/pages/Listing';
-import { PropertyListing } from './components/pages/PropertyListing';
+import InvestorForm from './components/pages/InvestorForm';
+import { PropertyPage } from './components/pages/PropertyPage';
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
           <Route path='/sign-up' Component={SignUp} />
           <Route path='/log-in' Component={LogIn} />
           <Route path='/form' Component={PropertyForm} />
-          <Route path='/listing/:id' Component={PropertyListing} />
+          <Route path='/property/:propertyId' Component={PropertyPage} />
         </Routes>
       </Router>
     </>

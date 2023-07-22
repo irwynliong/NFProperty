@@ -4,6 +4,10 @@ import { db, storage } from '../firebase/Firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc, collection } from 'firebase/firestore'; 
 import { AccountContext } from '../account/context/AccountContext';
+import { ListingProducer } from '../ethereum/contracts';
+import web3 from "../../web3";
+const Web3 = require("web3");
+const toWei = (str) => Web3.utils.toWei(`${str}`, "ether");
 
 const PropertyForm = ({ onSubmit, onCancel }) => {
   const [imageUrl, setImageUrl] = useState(null);
@@ -17,9 +21,29 @@ const PropertyForm = ({ onSubmit, onCancel }) => {
   const propertiesRef = collection(db, "properties");
 
   //when form is submitted
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
+    if (!account) {
+      console.log("Please connect wallet first");
+      return;
+    }
+    console.log(account);
+
+    await ListingProducer.methods
+      .listProperty(
+        realEstateName,
+        toWei(targetAmount, "ether")
+      )
+      .send({
+        from: account
+      })
+      .on("receipt", (receipt) => {
+        const listingAddress =
+        receipt.events.ListProperty.returnValues.listingAddress;
+        console.log(listingAddress)
+      });
+
     if (imageFile) {
       // Upload the image file to storage
       const storageRef = ref(storage, `images/${account}`);

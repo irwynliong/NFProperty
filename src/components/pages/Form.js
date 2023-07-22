@@ -3,10 +3,12 @@ import './Form.css'; // Import the CSS file
 import db from '../firebase/Firebase';
 import { doc, setDoc, collection } from "firebase/firestore"; 
 import { AccountContext } from "../account/context/AccountContext";
-//import { Property } from "../contracts/Property"
+import { ListingProducer } from "../ethereum/contracts"
 import web3 from '../../web3';
 import { WalletSDKRelayAbstract } from '@coinbase/wallet-sdk/dist/relay/WalletSDKRelayAbstract';
 
+const Web3 = require("web3");
+const toWei = (str) => Web3.utils.toWei(`${str}`, "ether");
 
 const PropertyForm = ({ onSubmit, onCancel }) => {
   
@@ -25,16 +27,19 @@ const PropertyForm = ({ onSubmit, onCancel }) => {
   const propertiesRef = collection(db, "properties");
 
   //when form is submitted
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     console.log(account);
     e.preventDefault();
-    /*if (!account) {
+    if (!account) {
       //popup("Please connect wallet first");
       return;
-    }*/
-    // New FireBase 
-    //console.log(account);
+    }
+    await ListingProducer.methods
+    .listProperty(realEstateName, toWei(targetAmount, "ether"))
+    .send({ from: account, gas:'1000000' });
     
+    // New FireBase 
+    console.log(account);
     setDoc(doc(propertiesRef), {
       realEstateName: realEstateName,
         targetAmount: targetAmount,
@@ -52,7 +57,7 @@ const PropertyForm = ({ onSubmit, onCancel }) => {
           onSubmit(); // Call the parent component's onSubmit function
         });
       } else {
-        //onSubmit();
+        onSubmit();
       }
     })
     .catch((error) => {

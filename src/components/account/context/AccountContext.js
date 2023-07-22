@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from "react";
-import ConnectWallet from "../../ConnectWallet";
-import Form from "../../pages/Form";
-
+import React, { useState } from "react";
 
 const AccountContext = React.createContext();
 

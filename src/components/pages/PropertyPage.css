@@ -1,0 +1,23 @@
+.property-page {
+    width: 100%;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.h1 {
+    margin: 0.5rem 5%;
+}
+
+.p {
+    margin: 0.5rem 5%;
+  }
+
+.invest-btn {
+    text-align: center;
+    width: 90%;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    background-color: #2563eb;
+    color: white;
+    text-decoration: none;
+    margin: 0.5rem 0.5rem;
+}

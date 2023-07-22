@@ -1,8 +1,10 @@
-import React, { cloneElement, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Form.css'; // Import the CSS file
-import db from '../firebase/Firebase';
 import { doc, setDoc, collection } from "firebase/firestore"; 
+import { db, storage } from '../firebase/Firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { AccountContext } from "../account/context/AccountContext";
+import { doc, setDoc, collection } from 'firebase/firestore'; 
 import { ListingProducer } from "../ethereum/contracts"
 import web3 from '../../web3';
 import { WalletSDKRelayAbstract } from '@coinbase/wallet-sdk/dist/relay/WalletSDKRelayAbstract';
@@ -11,18 +13,13 @@ const Web3 = require("web3");
 const toWei = (str) => Web3.utils.toWei(`${str}`, "ether");
 
 const PropertyForm = ({ onSubmit, onCancel }) => {
-  
+  const [imageUrl, setImageUrl] = useState(null);
   const [realEstateName, setRealEstateName] = useState('');
   const [targetAmount, setTargetAmount] = useState(0);
   const [totalTokens, setTotalTokens] = useState(0);
   const [delistDate, setDelistDate] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [account, setAccount] = React.useContext(AccountContext);
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImageFile(file);
-  };
 
   const propertiesRef = collection(db, "properties");
 
@@ -68,7 +65,7 @@ const PropertyForm = ({ onSubmit, onCancel }) => {
   return (
     <div>
       <h3>List a Property</h3>
-      <form onSubmit={handleSubmit}>
+      <form className='property-form'>
         <label>
           Real Estate Name:
           <input
@@ -125,7 +122,8 @@ const PropertyForm = ({ onSubmit, onCancel }) => {
             }}
           />
         </label>
-        <button type="submit">Submit</button>
+        
+        <button type="submit" onClick={handleSubmit}>Submit</button>
         <button type="button" onClick={onCancel}>
           Cancel
         </button>
@@ -135,4 +133,5 @@ const PropertyForm = ({ onSubmit, onCancel }) => {
 };
 
 export default PropertyForm;
+
 

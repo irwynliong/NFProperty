@@ -11,7 +11,7 @@ function Footer() {
           Input your email for any queries!
         </p>
         <p className='footer-subscription-text'>
-          You can unsubscribe at any time.
+          You can contact us any time.
         </p>
         <div className='input-areas'>
           <form>
@@ -63,7 +63,7 @@ function Footer() {
             </Link>
             <Link
               class='social-icon-link github'
-              to='/'
+              to='https://github.com/irwynliong/NFProperty'
               target='_blank'
               aria-label='Twitter'
             >

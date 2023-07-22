@@ -1,4 +1,4 @@
-import web3 from "web3";
+import web3 from "../../web3";
 import contracts from "./build/contracts.json";
 
 const ListingProducer = new web3.eth.Contract(

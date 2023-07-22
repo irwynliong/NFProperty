@@ -85,7 +85,6 @@ contract PropertyListing {
         return true;
     }
 
-
     //Extensions
     function _transfer(address sender, address recipient, uint256 amount) internal {
         require(_balances[sender] >= amount, "insufficient balance");

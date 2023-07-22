@@ -28,6 +28,8 @@ beforeEach(async () => {
     
     manager = accounts[1];
     investor = accounts[2];
+    investor2 = accounts[3];
+    investor3 = accounts[4];
 
     //deploy listing producer contract w/ connected account
     producer = await new web3.eth.Contract(ListingProducer.abi)
@@ -81,15 +83,29 @@ describe(' Listings', () => {
         await listing.methods.unlistProperty().send({
             from: manager,
             ...gas})
-            .on("receipt", (receipt) => console.log("closing listing, refund"));;
+            .on("receipt", (receipt) => console.log("closing listing, refund"));
             const aftBalance = await web3.eth.getBalance(investor);
             console.log(fromWei(aftBalance - begBalance));
             assert.ok(aftBalance - begBalance < toWei("0.005"));
     });
 
-/*
     it("allows manager to conclude campaign and distribute tokenized shares", async () => {
-
+        await listing.methods.invest().send({
+            value: toWei("0.04"), 
+            from: investor,
+            ...gas});
+        await listing.methods.invest().send({
+            value: toWei("0.04"), 
+            from: investor2,
+            ...gas});
+        await listing.methods.invest().send({
+            value: toWei("0.04"), 
+            from: investor3,
+            ...gas});
+        await listing.methods.unlistProperty().send({
+            from: manager,
+            ...gas})
+            .on("receipt", (receipt) => console.log("closing listing, distributing tokens"));
+        
     });
-*/
 });
